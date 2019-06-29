@@ -1,0 +1,40 @@
+---
+title: "Rsome vignette"
+author: "Jorik van Rijn"
+date: "6/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## qPCR analysis with Rsome
+
+Using the Rsome package you can automatically analyze qPCR data which was acquired using a BioRad qPCR machine. The first steps need to be performed in CFX manager or CFX maestro, to make sure the data is exported in the proper format. The following steps need to be taken in the CFX software to ensure that the Rsome package works:
+
+1. Once the qPCR run is complete, make sure all wells have the correct target and sample name submitted.
+2. Export all data as .txt files. All these .txt files should be contained in a separate in the analysis directory: "parent_directory/input/".
+3. Finally, you should have R installed, including the package 'devtools'. I suggest Rstudio as well! 
+
+ 
+```{r cars}
+#First define the directory where everything is going to happen! This folder should contain 
+#the subfolder '/input', which contains your qPCR data files in .txt format.
+#Then supply the filename of the Cq data file. Don't include the .txt
+
+setwd("parent_directory")
+filename <- "_qPCR_file_name_"
+
+#Then run the pipeline.
+
+df <- Rsome::cqimport(filename)
+re <- Rsome::relex(df)
+p1 <- Rsome::re.plot(re)
+
+#The plots are saved to the path './output', which is created if this directory does not exist. 
+#Additional data formatting in between definition of re and p1 is allowed!
+
+```
+
+

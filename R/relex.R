@@ -36,6 +36,13 @@ relex <- function(tablename, household = "Gapdh"){
     print(warning)
 
   }
+  
+  #Check if the folder ./output exists. If not, create it.
+  
+  if(dir.exists('./output') == FALSE){
+    dir.create('./output')
+  }
+  
   write.csv(rejectCq, file="output/rejectCq.csv")
   write.csv(RT, file="output/RTcontrols.csv")
   

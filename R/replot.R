@@ -4,6 +4,8 @@
 #' 
 #' @param tablename: a relex object
 #' @param groupColumn: defaults to "Sample". Defines the grouping column which will define coloring.
+#' @param plotWidth: width of output pdf file
+#' @param plotHeight: height of output pfd file
 #' @keywords qPCR, relative expression, plot
 #' @export re.plot
 #' @examples
@@ -13,7 +15,7 @@
 #' p1 <- re.plot(re)
 #' 
 
-re.plot <- function(tablename, groupColumn = "Sample"){
+re.plot <- function(tablename, groupColumn = "Sample", plotWidth = 10, plotHeight = 10){
   
   library(ggplot2)
   import::from(dplyr, sym)
@@ -33,6 +35,8 @@ re.plot <- function(tablename, groupColumn = "Sample"){
     geom_hline(
       yintercept=0,
       size=.5)
+  
+  ggsave(plot = p1, "output/relative_expression.pdf", width = plotWidth, height = plotHeight)
   
   return(p1)
 }
