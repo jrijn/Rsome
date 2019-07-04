@@ -20,6 +20,10 @@ re.plot <- function(tablename, groupColumn = "Sample", plotWidth = 10, plotHeigh
   library(ggplot2)
   import::from(dplyr, sym)
   
+  if(dir.exists('./output') == FALSE){
+    dir.create('./output')
+  }
+  
   p1 <- ggplot(tablename, aes(x=Sample, y=rel.expression), group = !!sym(groupColumn))+
     scale_y_continuous(limits=c(0,NA))+
     geom_bar(

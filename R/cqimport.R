@@ -21,7 +21,9 @@ cqimport <- function(tablename, dropunnecessary = TRUE){
   #First compile the .txt file name, assuming subfolder /input as source.
   #Then import the table with headings, assuming decimal separator ",".
  
-  filename <- paste("input/", tablename, ".txt", sep = "")
+  if(grepl("exampleData", tablename) == FALSE){
+    filename <- paste("input/", tablename, ".txt", sep = "")
+  }
   
   df <- read.table(
     filename, 
