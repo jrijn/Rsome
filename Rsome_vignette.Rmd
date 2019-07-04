@@ -45,17 +45,25 @@ Then you're all set to run the analysis. The code chunck below runs the standard
 
 #For a real world application:
 setwd("parent_directory")
-filename <- "_qPCR_file_name_"
-meltderivative <- "_meltcurve_derivative_file_name_"
+cqfile <- "_qPCR_file_name_"
+meltfile <- "_meltcurve_derivative_file_name_"
 
 #FOR USE OF EXAMPLE DATA ONLY. Comment out if you are using your own data.
 #filename <- Rsome::exampleData()
 
 #Then run the pipeline.
 
-cq <- Rsome::cqimport(filename)
-mc <- Rsome::mcimport(cq, meltderivative)
-re <- Rsome::relex(df)
+cq <- Rsome::cqimport(cqfile)
+
+mc <- Rsome::mcimport(
+  cqimport = cq, 
+  meltderivative = meltfile)
+
+re <- Rsome::relex(
+  cq, 
+  household = "Gapdh",
+  SDcutoff = 1,
+  Cqcutoff = 35)
 
 #And plot the graphs
 
