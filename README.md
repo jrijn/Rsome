@@ -1,52 +1,64 @@
----
-title: "Untitled"
-author: "Jorik van Rijn"
-date: "7/3/2019"
-output:
-  pdf_document: default
-  word_document: default
-  html_document: default
----
+# qPCR analysis with Rsome
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Introduction
+Using the Rsome package you can automatically analyze qPCR data which was acquired using a BioRad qPCR machine. The first steps need to be performed in CFX manager or CFX maestro, to make sure the data is exported in the proper format. The following steps need to be taken in the CFX software to ensure that the Rsome package works:
+
+1. Once the qPCR run is complete, make sure all wells have the correct target and sample name submitted in CFX maestro.
+2. Export all data as .txt files. All these .txt files should be contained in a separate in the analysis directory: "parent_directory/input/".
+3. Finally, you should have R installed, including the package 'devtools'. I suggest Rstudio as well! 
+
+
+## Install the package
+
+The Rsome package can be downloaded and installed directly through Github. Although you can clone and install the package manually from https://github.com/jrijn/Rsome, the 'devtools' package makes this very easy from within R itself.
+
+### Install using devtools
+Installation using the devtools package is as easy as this. Follow the instructions on updating and installing packages in the console window:
+
+```{r warning=FALSE, eval=FALSE}
+install.packages('devtools')
+devtools::install_github('jrijn/Rsome')
 ```
 
-## EXP-19-BT0308
+## Run the analysis pipeline in R
 
-The analysis of this qPCR experiment was performed using the Rsome package. This package was developed in house, more information is available in the vignette from http://www.github.com/jrijn/Rsome.
+Then you're all set to run the analysis. The code chunck below runs the standard pipeline, based on the folder structure discussed in the introduction.  
 
-# QPCR analysis
+ 
+```{r eval=FALSE}
+#First define the directory where everything is going to happen! This folder should contain 
+#the subfolder '/input', which contains your qPCR data files in .txt format.
+#Then supply the filename of the Cq data file. Don't include the .txt
 
-First, the samples were labeled according to the plate setup in CFX maestro. The output of CFX was saved as .txt files, and imported in R for analysis.
+#For a real world application:
+setwd("parent_directory")
+filename <- "_qPCR_file_name_"
+meltderivative <- "_meltcurve_derivative_file_name_"
 
-The working directory were the .txt files are stored was defined:
+#FOR USE OF EXAMPLE DATA ONLY. Comment out if you are using your own data.
+#filename <- Rsome::exampleData()
 
-```{r import}
-#setwd('//user.uu.se/bmci/IMB-Users/jorva668/Documents/Lab_data_JR/2019/EXP-19-BT0308-differentiation human organoids')
+#Then run the pipeline.
 
-filename <- "20190703_094313_CT029447_QPCR_JORIK -  Quantification Cq Results"
-meltderivative <- "20190703_094313_CT029447_QPCR_JORIK -  Melt Curve Derivative Results_SYBR"
-```
+cq <- Rsome::cqimport(filename)
+mc <- Rsome::mcimport(cq, meltderivative)
+re <- Rsome::relex(df)
 
-Next run the Rsome qPCR pipeline:
+#And plot the graphs
 
-```{r message=FALSE}
-df <- Rsome::cqimport(filename)
-p1 <- Rsome::cq.plot(df)
-
-mc <- Rsome::mcimport(cqimport = df, meltderivative = meltderivative)
+p1 <- Rsome::cq.plot(cq)
 p2 <- Rsome::mc.plot(mc)
-
-re <- Rsome::relex(df, household = 'HP1BP3')
 p3 <- Rsome::re.plot(re)
 
-p1
-p2
-p3
+#And save the graphs as needed
 
 ggsave(plot=p1, "output/cqplot.pdf", width=20, height=10)
 ggsave(plot=p2, "output/mcplot.pdf", width=20, height=10)
-ggsave(plot=p3, "output/relexplot.pdf", width=20, height=10)
+ggsave(plot=p3, "output/replot.pdf", width=20, height=10)
+
+#Additional data formatting in between definition of re and p1 is allowed!
+#This might be useful if there is an additional column defining the grouping variable.
+
 ```
+
 
