@@ -4,15 +4,21 @@
 \alias{relex}
 \title{Calculate The 2^dCt}
 \usage{
-relex(tablename, household = "Gapdh")
+relex(tablename, household = "Gapdh", SDcutoff = 1, Cqcutoff = 35)
 }
 \arguments{
 \item{tablename:}{a cqimport object}
 
 \item{household:}{defaults to "Gapdh". Accepts a string to define the household gene.}
+
+\item{SDcutoff:}{Defines the cutoff value for the standard deviation of the mean Cq. Default = 1.}
+
+\item{Cqcutoff:}{Defines the cutoff value for the mean Cq. Default = 35.}
 }
 \description{
-This function calculates the relative expression from a cqimport object.
+This function calculates the relative expression from a cqimport object. 
+Furthermore, it creates separate .csv files of the relative expression summary, 
+the samples which don't meet the set criteria, and the -RT values.
 }
 \examples{
 

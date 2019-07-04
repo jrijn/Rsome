@@ -1,9 +1,13 @@
 #' Calculate The 2^dCt
 #'
 #' This function calculates the relative expression from a cqimport object. 
+#' Furthermore, it creates separate .csv files of the relative expression summary, 
+#' the samples which don't meet the set criteria, and the -RT values.
 #' 
 #' @param tablename: a cqimport object
 #' @param household: defaults to "Gapdh". Accepts a string to define the household gene.
+#' @param SDcutoff: Defines the cutoff value for the standard deviation of the mean Cq. Default = 1.
+#' @param Cqcutoff: Defines the cutoff value for the mean Cq. Default = 35.
 #' @keywords qPCR, relative expression
 #' @export relex
 #' @examples
@@ -12,7 +16,7 @@
 #' rel.expression <- relex(df, household = "Gapdh")
 #' 
 
-relex <- function(tablename, household = "Gapdh"){
+relex <- function(tablename, household = "Gapdh", SDcutoff = 1, Cqcutoff = 35){
   
   library(dplyr)
   import::from(tidyr, separate, gather)
@@ -23,7 +27,7 @@ relex <- function(tablename, household = "Gapdh"){
     summarise(meanCq = mean(Cq), SD = sd(Cq), n = n())
   
   rejectCq <- meanCq %>%
-    filter(SD > 1 | meanCq > 35)
+    filter(SD > SDcutoff | meanCq > Cqcutoff)
 
   warning <- rejectCq %>%
     filter(!grepl('-RT', Sample))
