@@ -2,6 +2,7 @@
 
 export(cq.plot)
 export(cqimport)
+export(eff.plot)
 export(exampleData)
 export(mc.plot)
 export(mcimport)
