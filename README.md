@@ -31,7 +31,7 @@ Then you're all set to run the analysis. The code chunck below runs the standard
 #Then supply the filename of the Cq data file. Don't include the .txt
 
 #For a real world application:
-setwd("parent_directory")
+rootdir <- "path_to_root_dir"
 cqfile <- "_qPCR_file_name_"
 meltfile <- "_meltcurve_derivative_file_name_"
 
@@ -40,17 +40,24 @@ meltfile <- "_meltcurve_derivative_file_name_"
 
 #Then run the pipeline.
 
-cq <- Rsome::cqimport(cqfile)
+cq <- Rsome::cqimport(
+  indir = rootdir, 
+  tablename = cqfile)
 
 mc <- Rsome::mcimport(
+  indir = rootdir,
   cqimport = cq, 
   meltderivative = meltfile)
+
+#Optional additional manual formatting of cq dataframe here
 
 re <- Rsome::relex(
   cq, 
   household = "Gapdh",
   SDcutoff = 1,
   Cqcutoff = 35)
+  
+#Optional additional manual formatting of re dataframe here
 
 #And plot the graphs
 
