@@ -5,6 +5,7 @@
 #' First simply use the file name (without .txt) as input, assuming subfolder /input as source.
 #' 
 #' @param cqimport: A cqimport object. 
+#' @param indir: The path of the root directory containing the script.
 #' @param meltderivative: This is the file containing the meltcurve derivative data.
 #' @keywords qPCR, import
 #' @export mcimport
@@ -17,7 +18,7 @@
 #' df <- cqimport(filename)
 #' mc <- mcimport(cqimport = df, meltderivative = meltderivative)
 
-mcimport <- function(cqimport = df, meltderivative = meltderivative){
+mcimport <- function(indir, cqimport = df, meltderivative = meltderivative){
  
   #First load the required packages
   
@@ -27,7 +28,7 @@ mcimport <- function(cqimport = df, meltderivative = meltderivative){
   # Meltcurve analysis
   ## Import data
   
-  filename <- paste("input/", meltderivative, ".txt", sep = "")
+  filename <- paste(indir, "/input/", meltderivative, ".txt", sep = "")
   
   mc <- read.table(
     filename, 
