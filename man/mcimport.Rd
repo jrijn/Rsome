@@ -4,10 +4,12 @@
 \alias{mcimport}
 \title{Import BioRad qPCR Data}
 \usage{
-mcimport(cqimport = df, meltderivative = meltderivative)
+mcimport(indir, cqimport = df, meltderivative = meltderivative)
 }
 \arguments{
 \item{cqimport:}{A cqimport object.}
+
+\item{indir:}{The path of the root directory containing the script.}
 
 \item{meltderivative:}{This is the file containing the meltcurve derivative data.}
 }

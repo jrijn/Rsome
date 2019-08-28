@@ -6,6 +6,7 @@
 #' The Cq is set to 40 in those wells were the threshold was not reached.
 #' 
 #' @param tablename: This is the filename of the .txt file containing Cq values as copied from the file manager. 
+#' @param indir: The path of the root directory containing the script.
 #' @param dropunnecessary: Defaults to TURE. If TRUE, returns only the columns "Well", "Target", "Sample", "Cq".
 #' @keywords qPCR, import
 #' @export cqimport
@@ -16,13 +17,13 @@
 #' filename <- "example_file_name"
 #' df <- cqimport(filename)
 
-cqimport <- function(tablename, dropunnecessary = TRUE){
+cqimport <- function(indir, tablename, dropunnecessary = TRUE){
   
   #First compile the .txt file name, assuming subfolder /input as source.
   #Then import the table with headings, assuming decimal separator ",".
  
   if(grepl("exampleData", tablename) == FALSE){
-    filename <- paste("input/", tablename, ".txt", sep = "")
+    filename <- paste(indir, "/input/", tablename, ".txt", sep = "")
   }
   
   df <- read.table(

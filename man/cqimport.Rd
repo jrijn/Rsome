@@ -4,10 +4,12 @@
 \alias{cqimport}
 \title{Import BioRad qPCR Data}
 \usage{
-cqimport(tablename, dropunnecessary = TRUE)
+cqimport(indir, tablename, dropunnecessary = TRUE)
 }
 \arguments{
 \item{tablename:}{This is the filename of the .txt file containing Cq values as copied from the file manager.}
+
+\item{indir:}{The path of the root directory containing the script.}
 
 \item{dropunnecessary:}{Defaults to TURE. If TRUE, returns only the columns "Well", "Target", "Sample", "Cq".}
 }
