@@ -31,7 +31,7 @@ Then you're all set to run the analysis. The code chunck below runs the standard
 #Then supply the filename of the Cq data file. Don't include the .txt
 
 #For a real world application:
-rootdir <- "path_to_root_dir"
+rootdir <- "parent_directory"
 cqfile <- "_qPCR_file_name_"
 meltfile <- "_meltcurve_derivative_file_name_"
 
