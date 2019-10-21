@@ -40,7 +40,7 @@ re.plot <- function(tablename, groupColumn = "Sample", plotWidth = 10, plotHeigh
       yintercept=0,
       size=.5)
   
-  ggsave(plot = p1, "output/relative_expression.pdf", width = plotWidth, height = plotHeight)
+  ##ggsave(plot = p1, "output/relative_expression.pdf", width = plotWidth, height = plotHeight)
   
   return(p1)
 }
