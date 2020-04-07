@@ -28,10 +28,10 @@ cq.plot <- function(tablename, groupColumn = "Sample", plotWidth = 10, plotHeigh
   
   #Then plot the Cq values, faceting is set to the target gene.
   
-  p1 <- ggplot(samples, aes(x=Sample, y=Cq), group = Target)+
+  p1 <- ggplot(samples, aes(x=Sample, y=Cq), group = Sample)+
     scale_y_continuous(limits=c(12.5,NA))+
     geom_dotplot(
-      aes(fill=factor(Target)), 
+      aes(fill=factor(Sample)), 
       binaxis = "y",
       stackdir = "center")+
     facet_wrap(
