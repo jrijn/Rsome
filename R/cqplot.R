@@ -31,6 +31,7 @@ cq.plot <- function(tablename, groupColumn = "Sample", plotWidth = 10, plotHeigh
   p1 <- ggplot(samples, aes(x=Sample, y=Cq))+
     scale_y_continuous(limits=c(12.5,NA))+
     geom_dotplot(
+      shape = 23,
       binaxis = "y",
       stackdir = "center")+
     facet_wrap(
